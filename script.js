@@ -28,6 +28,19 @@ function formatCurrencyBRL(value){
   return value
 }
 
+// Captura o evento de submit do formulário
 form.onsubmit = (event) => {
   event.preventDefault() // Impede o envio do formulário
+  
+  // Cria um objeto com os dados da nova despesa
+  const newExpense = {
+    id: new Date().getTime(), // Gera um ID único com base no timestamp
+    expense: expense.value,
+    category: category.value,
+    category_name: category.options[category.selectedIndex].text, // Obtém o nome da categoria selecionada
+    amount: amount.value,
+    created_at: new Date(),
+  }
+
+  console.log(newExpense) // Exibe o objeto da nova despesa no console
 }
