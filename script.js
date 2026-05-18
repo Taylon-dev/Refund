@@ -4,6 +4,9 @@ const amount = document.getElementById("amount")
 const expense = document.getElementById("expense")
 const category = document.getElementById("category")
 
+// Seleciona os elementos da lista
+const expenseList = document.querySelector("ul")
+
 // Captura o evento de input para formatar o valor
 amount.oninput = () => {
   // Remove todos os caracteres que não são dígitos
@@ -36,7 +39,7 @@ form.onsubmit = (event) => {
   const newExpense = {
     id: new Date().getTime(), // Gera um ID único com base no timestamp
     expense: expense.value,
-    category: category.value,
+    category_id: category.value,
     category_name: category.options[category.selectedIndex].text, // Obtém o nome da categoria selecionada
     amount: amount.value,
     created_at: new Date(),
@@ -51,6 +54,18 @@ function expenseAdd(newExpense){
     // Cria o elemento de li para adicionar na lista (ul)
     const expenseItem = document.createElement("li")
     expenseItem.classList.add("expense")
+
+    // Cria o ícone da categoria
+    const expenseIcon = document.createElement("img")
+    expenseIcon.setAttribute("src",`img/${newExpense.category_id}.svg`)
+    expenseIcon.setAttribute("alt", newExpense.category_name)
+
+    // Adiciona as informações no item
+    expenseItem.append(expenseIcon)
+
+    // Adiciona o item na lista
+    expenseList.append(expenseItem)
+
   } catch (error) {
     alert("Não foi possível atualizar a lista de despesas.")
     console.log(error)
