@@ -121,7 +121,7 @@ function updateTotals(){
     for (let item = 0; item < items.length; item++) {
       const itemAmount = items[item].querySelector(".expense-amount")
 
-      let value = itemAmount.textContent.replace(/[^\d]/g, "").replace(",", ".") // Remove caracteres não numéricos e substitui vírgula por ponto
+      let value = itemAmount.textContent.replace(/[^\d,]/g, "").replace(",", ".") // Remove caracteres não numéricos e substitui vírgula por ponto
       value = parseFloat(value) // Converte a string para número de ponto flutuante
 
       // Verificar se é um numero válido
@@ -133,7 +133,16 @@ function updateTotals(){
       total += Number(value)
     }
 
-    expensesTotal.textContent = total
+    // Cria o small para adicionar o R$ formatado
+    const symbolBRL = document.createElement("small")
+    symbolBRL.textContent = "R$"
+
+    // Formata o valor e remove o R$ que será exibido no small
+    total = formatCurrencyBRL(total).toUpperCase().replace("R$", "") // Formata o total como moeda brasileira e remove o símbolo "R$"
+
+    expensesTotal.innerHTML = "" // Limpa o conteúdo atual do elemento
+
+    expensesTotal.append(symbolBRL, total) // Adiciona o símbolo "R$" e o valor total formatado ao elemento
 
   } catch (error) {
     
